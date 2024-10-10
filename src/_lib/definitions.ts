@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 export const SignupFormSchema = z.object({
     name: z.string().min(2, { message: 'El nombre es requerido' }),
     lastName: z.string().min(2, { message:'El apellido es requerido'}),
@@ -13,9 +12,14 @@ export const SignupFormSchema = z.object({
       message: 'Debe contener al menos un carácter especial.',
     })
     .trim(),
-})
+    // image: z.string().min(2, { message: 'El nombre es requerido' }).trim(),
+    foot: z.string().min(2, { message: 'El nombre es requerido' }).trim(),
+    artist: z.string().min(2, { message: 'El nombre es requerido' }).trim(),
+    place: z.string().min(2, { message: 'El nombre es requerido' }).trim(),
+    color: z.string().min(2, { message: 'El nombre es requerido' }).trim(),
+});
 
 export const LoginFormSchema = z.object({
     email: z.string().email({ message: 'Por favor ingresa un correo valido.' }),
-    password: z.string().min(1, { message: 'La contraseña no puede estar vacia.' }),
+    password: z.string({required_error: 'La contraseña es requerida'}).min(4, { message: 'La contraseña no puede estar vacia.' }),
   });
