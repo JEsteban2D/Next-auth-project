@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 // import GenericInput from "@/app/components/generic-input/GenericInput";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SigninForm.module.css";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type SignupFormInputs = z.infer<typeof LoginFormSchema>;
 
@@ -19,8 +21,26 @@ const SigninForm = () => {
     resolver: zodResolver(LoginFormSchema),
   });
 
-  const onSubmit = (data: SignupFormInputs) => {
+  const router = useRouter();
+
+  const onSubmit = async (data: SignupFormInputs) => {
     console.log(data);
+    const res = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      }
+    )
+    if (!res) {
+      console.error('No se pudo obtener una respuesta del servidor.');
+      return;
+    }
+    if (res.error) {
+      console.error('Error en el login:', res.error);
+
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   return (

@@ -29,7 +29,7 @@ const SignupForm = () => {
       }
     })
     if(res.ok) {
-      router.push('/signin')
+      router.push('/auth/signin')
     }
     // const resJSON = await res.json()
     console.log(res)

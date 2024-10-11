@@ -1,16 +1,18 @@
-// import { auth } from "@/auth";
+import React from 'react'
+import { auth } from '../../../../auth';
+import LogoutButton from '@/app/components/logout-button/LogoutButton';
 
 export default async function DashboardPage() {
-  // const session = await auth();
+const session = await auth();
 
-  // if (!session) {
-  //   return <div>Not authenticated</div>;
-  // }
+  if (!session) {
+    return <div> Not Authenticated</div>
+  }
 
   return (
-    <div className="container">
-      {/* <pre>{JSON.stringify(session, null, 2)}</pre> */}
-      <h2>DashboardPage</h2>
+    <div>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
+      <LogoutButton/>
     </div>
   );
 }
