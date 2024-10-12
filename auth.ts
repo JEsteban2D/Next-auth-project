@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-
+  session: { strategy: "jwt"},
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -13,7 +13,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-
         const userFound = await db.user.findUnique({
           where: {
             email: credentials.email as string,
@@ -34,11 +33,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: userFound.id.toString(),
           name: userFound.name,
           email: userFound.email,
+          role: userFound.role,
         };
       },
     }),
   ],
-//   pages: {
-//     signIn: "/auth/signin",
-//   },
+
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        // User is available during sign-in
+        token.role = user.role;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role;
+      }
+
+      return session;
+    },
+  },
 });
