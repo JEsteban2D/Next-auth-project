@@ -39,7 +39,15 @@ const SigninForm = () => {
       console.error('Error en el login:', res.error);
 
     } else {
-      router.push('/dashboard');
+      const sessionRes = await fetch("/api/auth/session");
+      const session = await sessionRes.json();
+
+      // Verificamos el rol del usuario y redirigimos
+      if (session?.user?.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
     }
   };
 

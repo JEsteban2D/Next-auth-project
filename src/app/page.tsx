@@ -1,9 +1,11 @@
-import styles from "./page.module.css";
+import SigninForm from "./auth/signin/SigninForm";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>Main Page</main>
+    <div>
+      <main>
+      <SigninForm/> 
+      </main>
     </div>
   );
 }
