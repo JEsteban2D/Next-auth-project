@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(130, 166, 238);
+  position: absolute;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 4rem;
+  color: aliceblue;
+}
+
+.welcome {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}

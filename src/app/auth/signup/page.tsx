@@ -13,15 +13,15 @@ const page = () => {
         IMAGEN
       </div>
       <div className={styles.containerPageForm}>
-        <div>
-          <h1>Create an account</h1>
-          <p>Enter your information to get started</p>
+        <div className={styles.textSigninPage}>
+          <h1>Crea una cuenta</h1>
+          <p>Ingresa tu información para comenzar</p>
         </div>
         <div>
           <SignupForm />
         </div>
         <div>
-          Already have an account?{" "}
+          ¿Ya tienes una cuenta?{" "}
           <Link className="underline" href="/auth/signin">
             Login
           </Link>

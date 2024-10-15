@@ -4,7 +4,6 @@ import { LoginFormSchema } from "@/_lib/definitions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-// import GenericInput from "@/app/components/generic-input/GenericInput";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SigninForm.module.css";
 import { signIn } from "next-auth/react";
@@ -25,19 +24,17 @@ const SigninForm = () => {
 
   const onSubmit = async (data: SignupFormInputs) => {
     console.log(data);
-    const res = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      }
-    )
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
     if (!res) {
-      console.error('No se pudo obtener una respuesta del servidor.');
+      console.error("No se pudo obtener una respuesta del servidor.");
       return;
     }
     if (res.error) {
-      console.error('Error en el login:', res.error);
-
+      console.error("Error en el login:", res.error);
     } else {
       const sessionRes = await fetch("/api/auth/session");
       const session = await sessionRes.json();
@@ -56,14 +53,18 @@ const SigninForm = () => {
       <div className={styles.form}>
         <div className={styles.containerInputs}>
           <label>Correo Electrónico</label>
-          <input type="email" {...register("email")} />
+          <input type="email" {...register("email")} className={styles.input} />
           {errors.email && (
             <p className={styles.formError}>{errors.email.message}</p>
           )}
         </div>
         <div className={styles.containerInputs}>
           <label>Contraseña</label>
-          <input type="password" {...register("password")} />
+          <input
+            type="password"
+            {...register("password")}
+            className={styles.input}
+          />
           {errors.password && (
             <p className={styles.formError}>{errors.password.message}</p>
           )}

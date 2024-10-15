@@ -1,22 +1,6 @@
+import { CardProps } from "../../../../types/types";
 import styles from "./CardUser.module.css";
-
 import React from "react";
-
-interface User {
-  id: number;
-  name: string;
-  lastName: string;
-  email: string;
-  role: string;
-  foot: String;
-  artist: String;
-  place: String;
-  color: String;
-}
-
-interface CardProps {
-  user: User;
-}
 
 const CardUser: React.FC<CardProps> = ({ user }) => {
   return (
