@@ -28,13 +28,17 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/auth/signin", nextUrl));
   }
 
-   // Verificar si el usuario es "admin" para acceder a la ruta /admin
-   if (nextUrl.pathname.startsWith("/admin") && role !== "admin") {
+  // Verificar si el usuario es "admin" para acceder a la ruta /admin
+  if (nextUrl.pathname.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/dashboard", nextUrl)); // Redirigir al dashboard si no es admin
   }
 
   // Verificar si un usuario normal intenta acceder a /admin
-  if (nextUrl.pathname.startsWith("/dashboard") && role !== "user" && role !== "admin") {
+  if (
+    nextUrl.pathname.startsWith("/dashboard") &&
+    role !== "user" &&
+    role !== "admin"
+  ) {
     return NextResponse.redirect(new URL("/auth/signin", nextUrl)); // Redirigir a login si no es user/admin
   }
 

@@ -30,7 +30,7 @@ const SigninForm = () => {
       redirect: false,
     });
     if (!res) {
-      console.error("No se pudo obtener una respuesta del servidor.");
+      console.error("Error en el servidor.");
       return;
     }
     if (res.error) {

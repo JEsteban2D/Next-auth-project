@@ -1,8 +1,10 @@
+'use client'
 import Link from "next/link";
 import React from "react";
 import SignupForm from "./SignupForm";
 // import Image from "next/image";
 import styles from "./SignupForm.module.css";
+import { CldUploadButton } from "next-cloudinary";
 
 const page = () => {
   //   const algo = "algo";
@@ -26,6 +28,7 @@ const page = () => {
             Login
           </Link>
         </div>
+        <CldUploadButton uploadPreset="ml_default" />
       </div>
     </div>
   );

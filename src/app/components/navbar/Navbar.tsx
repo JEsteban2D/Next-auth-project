@@ -14,7 +14,7 @@ const Navbar = async () => {
             <h2>bienvenido</h2>
             <h2>{session.user.name}</h2>
           </div>
-          <LogoutButton />
+          <LogoutButton/>
         </div>
       ) : null}
     </header>
