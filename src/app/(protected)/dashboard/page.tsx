@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./dashboard.module.css";
 import { ResponseData } from "../../../../types/types";
+import Image from "next/image";
 
 export default function DashboardPage() {
   const [data, setData] = useState<ResponseData | null>(null);
@@ -27,7 +28,18 @@ export default function DashboardPage() {
       <div className={styles.userInfo}>
         <div className={styles.userGradient}></div>
         <div className={styles.userHeaderProfile}>
-          <div className={styles.cardImage}></div>
+        {data.currentUser.image ? (
+            <Image
+              className={styles.cardImage}
+              src={data.currentUser.image}
+              width={500}
+              height={500}
+              alt="Profile picture of the user"
+              loading="lazy" // Opcional: para cargar la imagen de forma más eficiente
+            />
+          ) : (
+            <div>No image available</div> // Mensaje si no hay imagen
+          )}
           <div className={styles.containerText}>
             <p className={styles.nameProfile}>
               {data.currentUser.name} {data.currentUser.lastName}

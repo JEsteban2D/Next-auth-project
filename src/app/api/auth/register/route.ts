@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
         artist: data.artist,
         place: data.place,
         color: data.color,
+        image: data.image,
       },
     });
 

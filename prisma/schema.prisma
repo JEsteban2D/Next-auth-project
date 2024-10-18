@@ -25,9 +25,9 @@ model User {
   email     String   @unique
   role      Role     @default(user)
   password  String 
-  image     String?
   foot      String? 
   artist    String? 
   place     String? 
   color     String?  
+  image     String?
 }

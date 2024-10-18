@@ -26,6 +26,7 @@ export async function GET(request: Request) {
         artist: true,
         place: true,
         color: true,
+        image: true,
       },
     });
 
@@ -42,6 +43,7 @@ export async function GET(request: Request) {
         artist: true,
         place: true,
         color: true,
+        image: true,
       },
     });
 
@@ -59,5 +61,29 @@ export async function GET(request: Request) {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
+  }
+}
+
+export async function PUT(request: Request){
+  const session = await auth();
+
+  if (!session) {
+    return new Response(JSON.stringify({ error: "No hay usuario disponible" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  try {
+    const updateUser = await db.user.update({
+      where: {
+        email: {email: session.user.email},
+      },
+      data: {
+        name: 'Viola the Magnificent',
+      },
+    })
+  } catch (error) {
+    console.log(error)
   }
 }

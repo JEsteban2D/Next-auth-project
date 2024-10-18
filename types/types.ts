@@ -8,6 +8,7 @@ export interface User {
   artist: string;
   place: string;
   color: string;
+  image: string;
 }
 
 export interface ResponseData {
