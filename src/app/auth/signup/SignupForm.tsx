@@ -4,8 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SignupForm.module.css";
 import { CldUploadWidget } from "next-cloudinary";
-
-// type SignupFormInputs = z.infer<typeof SignupFormSchema>;
+import Link from "next/link";
 
 interface SignupFormInputs {
   name: string;
@@ -20,8 +19,7 @@ interface SignupFormInputs {
 }
 
 const SignupForm = () => {
-
-  const [resource, setResource] = useState<string | null>(null); // Usamos string ya que será la URL de la imagen
+  const [resource, setResource] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<SignupFormInputs>();
 
   const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
@@ -34,7 +32,7 @@ const SignupForm = () => {
           },
           body: JSON.stringify({
             ...formData,
-            image: resource, // Pasar la URL de la imagen al servidor
+            image: resource,
           }),
         });
 
@@ -51,11 +49,13 @@ const SignupForm = () => {
     }
   };
 
-  // console.log("O AQUI :", resource.url)
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
+        <div className={styles.textSigninPage}>
+          <h1>Crea una cuenta</h1>
+          <p>Ingresa tu información para comenzar</p>
+        </div>
         <div className={styles.containerInputs}>
           <label>Nombre</label>
           <input
@@ -125,11 +125,21 @@ const SignupForm = () => {
             }}
           >
             {({ open }) => {
-              return <button type="button" onClick={() => open()}>Upload an Image</button>;
+              return (
+                <button className={styles.uploadImage} type="button" onClick={() => open()}>
+                  Subir una Imagen
+                </button>
+              );
             }}
           </CldUploadWidget>
         </div>
-        <GenericButton type="submit" />
+        <GenericButton type="submit"/>
+        <div className={styles.linkTextFooter}>
+          ¿Ya tienes una cuenta?{" "}
+          <Link className={styles.link} href="/auth/signin">
+            Login
+          </Link>
+        </div>
       </div>
     </form>
   );

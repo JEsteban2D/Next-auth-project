@@ -8,6 +8,7 @@ import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SigninForm.module.css";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type SignupFormInputs = z.infer<typeof LoginFormSchema>;
 
@@ -51,6 +52,10 @@ const SigninForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
+        <div className={styles.textHeaderForm}>
+          <h1>Inicia sesión en tu cuenta</h1>
+          <p>Ingresa tu información para comenzar</p>
+        </div>
         <div className={styles.containerInputs}>
           <label>Correo Electrónico</label>
           <input type="email" {...register("email")} className={styles.input} />
@@ -70,6 +75,12 @@ const SigninForm = () => {
           )}
         </div>
         <GenericButton type="submit">Login</GenericButton>
+        <div className={styles.linkTextFooter}>
+          ¿Aun no tienes una cuenta?{" "}
+          <Link className={styles.link} href="/auth/signup">
+            Register
+          </Link>
+        </div>
       </div>
     </form>
   );

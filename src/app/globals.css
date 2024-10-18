@@ -1,7 +1,6 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :root {
@@ -12,20 +11,24 @@
 html,
 body {
   max-width: 100vw;
+  height: 100vh;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-image: url("./assets/bg-principalO.jpg");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .layout {
-  margin-top: 5rem;
+  margin-top: 53px;
 }
