@@ -1,7 +1,8 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(130, 166, 238);
+  background: rgb(28,119,209);
+  background: linear-gradient(90deg, rgba(28,119,209,1) 5%, rgba(138,199,255,1) 100%, rgba(255,255,255,1) 100%);;
   position: absolute;
   width: 100%;
   padding: 0.5rem;

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CardProps } from "../../../../types/types";
 import styles from "./CardUser.module.css";
 import React from "react";
@@ -8,7 +9,18 @@ const CardUser: React.FC<CardProps> = ({ user }) => {
       <div className={styles.cardContent}>
         <header className={styles.cardHeader}>
           <div className={styles.cardHeaderImage}>
-            <div className={styles.cardImage}></div>
+            {user.image ? (
+            <Image
+              className={styles.cardImage}
+              src={user.image}
+              width={500}
+              height={500}
+              alt="Profile picture of the user"
+              loading="lazy" // Opcional: para cargar la imagen de forma más eficiente
+            />
+          ) : (
+            <div className={styles.defaultCardImage}></div>
+          )}
             <div className={styles.cardNameContainer}>
               <h2>
                 {user.name} {user.lastName}
