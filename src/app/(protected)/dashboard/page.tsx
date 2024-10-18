@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./dashboard.module.css";
 import { ResponseData } from "../../../../types/types";
 import Image from "next/image";
+import UpdateUserForm from "@/app/components/update-user-form/UpdateUserForm";
 
 export default function DashboardPage() {
   const [data, setData] = useState<ResponseData | null>(null);
@@ -28,7 +29,7 @@ export default function DashboardPage() {
       <div className={styles.userInfo}>
         <div className={styles.userGradient}></div>
         <div className={styles.userHeaderProfile}>
-        {data.currentUser.image ? (
+          {data.currentUser.image ? (
             <Image
               className={styles.cardImage}
               src={data.currentUser.image}
@@ -103,6 +104,9 @@ export default function DashboardPage() {
             />
           </div>
         </section>
+      </div>
+      <div>
+        <UpdateUserForm />
       </div>
     </div>
   );

@@ -75,14 +75,51 @@ export async function PUT(request: Request){
   }
 
   try {
+    const body = await request.json();
+
+    // Extraer los campos que pueden ser actualizados
+    const { name, lastName, foot, artist, place, color, 
+      // image 
+    } = body;
+
+    // Validación opcional para asegurarte que al menos hay datos a actualizar
+    if (
+      !name &&
+      !lastName &&
+      !foot &&
+      !artist &&
+      !place &&
+      !color 
+      // &&
+      // !image
+    ) {
+      return new Response(
+        JSON.stringify({ error: "No hay datos para actualizar" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
     const updateUser = await db.user.update({
       where: {
-        email: {email: session.user.email},
+        email: session.user.email
       },
       data: {
-        name: 'Viola the Magnificent',
+        name: name || undefined,
+        lastName: lastName || undefined,
+        foot: foot || undefined,
+        artist: artist || undefined,
+        place: place || undefined,
+        color: color || undefined,
+        // image: image || undefined,
       },
     })
+
+    return new Response(JSON.stringify(updateUser), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.log(error)
   }

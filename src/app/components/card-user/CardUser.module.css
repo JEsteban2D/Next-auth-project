@@ -27,10 +27,17 @@
   gap: 1rem;
 }
 
+.defaultCardImage {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(182, 182, 182);
+  border-radius: 100%;
+}
+
 .cardImage {
   width: 60px;
   height: 60px;
-  background-color: darkgray;
+  /* background-color: darkgray; */
   border-radius: 100%;
 }
 
