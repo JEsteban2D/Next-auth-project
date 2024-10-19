@@ -1,7 +1,7 @@
 import { db } from "@/_lib/db";
 import { auth } from "../../../../auth";
 
-export async function GET(request: Request) {
+export async function GET() {
   // Obtiene la sesión del usuario actual
   const session = await auth();
 
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 
     // Obtener el usuario de la sesión actual
     const currentUser = await db.user.findUnique({
-      where: { email: session.user.email },
+      where: { email: session.user.email as string },
       select: {
         id: true,
         name: true,
@@ -103,7 +103,7 @@ export async function PUT(request: Request){
     }
     const updateUser = await db.user.update({
       where: {
-        email: session.user.email
+        email: session.user.email as string
       },
       data: {
         name: name || undefined,

@@ -135,7 +135,7 @@ const SignupForm = () => {
           <CldUploadWidget
             uploadPreset="ml_default"
             onSuccess={(result) => {
-              setResource(result?.info.url);
+              setResource((result.info as { url: string }).url);
             }}
           >
             {({ open }) => {
