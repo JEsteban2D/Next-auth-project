@@ -12,7 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 type SignupFormInputs = z.infer<typeof SignupFormSchema>;
 
-
 const SignupForm = () => {
   const [resource, setResource] = useState<string | null>(null);
   // const { register, handleSubmit } = useForm<SignupFormInputs>();
@@ -25,41 +24,37 @@ const SignupForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormInputs>({
-    resolver: zodResolver(SignupFormSchema), // Resolver de Zod para manejar la validación
+    resolver: zodResolver(SignupFormSchema),
   });
 
   const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
-    if (resource) {
-      setIsLoading(true);
-      try {
-        const response = await fetch("/api/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...formData,
-            image: resource,
-          }),
-        });
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          image: resource || null,
+        }),
+      });
 
-        if (response.ok) {
-          setIsSuccess(true);
-          console.log("Usuario registrado con éxito");
-          alert(
-            "¡Registro Exitoso! Serás redirigido a la página de inicio de sesión."
-          );
-          router.push("/auth/signin");
-        } else {
-          console.error("Error al registrar el usuario");
-        }
-      } catch (error) {
-        console.error("Error en la solicitud de registro:", error);
-      } finally {
-        setIsLoading(false);
+      if (response.ok) {
+        setIsSuccess(true);
+        console.log("Usuario registrado con éxito");
+        alert(
+          "¡Registro Exitoso! Serás redirigido a la página de inicio de sesión."
+        );
+        router.push("/auth/signin");
+      } else {
+        console.error("Error al registrar el usuario");
       }
-    } else {
-      console.error("No se ha seleccionado una imagen");
+    } catch (error) {
+      console.error("Error en la solicitud de registro:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +72,9 @@ const SignupForm = () => {
             className={styles.input}
             placeholder="Nombre"
           />
-          {errors.name && <p className={styles.formError}>{errors.name.message}</p>}
+          {errors.name && (
+            <p className={styles.formError}>{errors.name.message}</p>
+          )}
         </div>
         <div className={styles.containerInputs}>
           <label>Apellido</label>
@@ -107,7 +104,9 @@ const SignupForm = () => {
         <div className={styles.containerInputs}>
           <label>Comida Favorita</label>
           <input {...register("foot")} className={styles.input} />
-          {errors.foot && <p className={styles.formError}>{errors.foot.message}</p>}
+          {errors.foot && (
+            <p className={styles.formError}>{errors.foot.message}</p>
+          )}
         </div>
         <div className={styles.containerInputs}>
           <label>Artista Favorito</label>
