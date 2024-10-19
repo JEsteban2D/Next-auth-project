@@ -1,7 +1,8 @@
 import { db } from "@/_lib/db";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt-edge";
+// import argon2 from "argon2"
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     console.log("Datos recibidos:", data);
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hashSync(data.password, 10);
 
     const newUser = await db.user.create({
       data: {

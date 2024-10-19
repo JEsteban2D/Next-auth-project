@@ -1,7 +1,8 @@
 import { db } from "@/_lib/db";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt-edge";
+// import argon2 from "argon2";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt"},
@@ -23,12 +24,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!userFound) throw new Error("Usuario no encontrado");
 
-        const matchPassword = await bcrypt.compare(
+        const matchPassword = await bcrypt.compareSync(
           credentials.password as string,
           userFound.password
         );
 
         if (!matchPassword) throw new Error("Contraseña incorrecta");
+        
         return {
           id: userFound.id.toString(),
           name: userFound.name,
