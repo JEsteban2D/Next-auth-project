@@ -3,10 +3,7 @@
   justify-content: space-between;
   background: rgb(28,119,209);
   background: linear-gradient(90deg, rgba(28,119,209,1) 5%, rgba(138,199,255,1) 100%, rgba(255,255,255,1) 100%);;
-  position: absolute;
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 4rem;
+  padding: 0.5rem 2rem;
   color: aliceblue;
 }
 

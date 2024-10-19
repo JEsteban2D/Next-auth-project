@@ -5,9 +5,10 @@ import styles from "./Navbar.module.css";
 
 const Navbar = async () => {
   const session = await auth();
+  
   return (
     <header className={styles.header}>
-      {session ? (<h1>Profile</h1>) : <h1>Profile</h1>}
+      {session ? (<h1>Profile</h1>) : <h1>Home</h1>}
       {session ? (
         <div className={styles.welcome}>
           <div className={styles.welcome}>

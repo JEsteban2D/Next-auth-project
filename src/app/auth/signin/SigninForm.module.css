@@ -71,3 +71,8 @@
 .link {
   color: rgb(9, 168, 241);
 }
+
+.authError {
+  color: crimson;
+  font-size: 14px;
+}

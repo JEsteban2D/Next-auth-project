@@ -13,21 +13,10 @@ export const SignupFormSchema = z.object({
       message: "Debe contener al menos un carácter especial.",
     })
     .trim(),
-    // image: z
-    // .array(z.instanceof(File))
-    // .min(1, { message: "Debes subir una imagen" })
-    // .refine(
-    //   (files) => {
-    //     const file = files[0]; // Tomamos el primer archivo
-    //     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-    //     return allowedTypes.includes(file.type);
-    //   },
-    //   { message: "La imagen debe ser un archivo JPG, PNG o GIF" }
-    // ),
-  foot: z.string().min(2, { message: "El nombre es requerido" }).trim(),
-  artist: z.string().min(2, { message: "El nombre es requerido" }).trim(),
-  place: z.string().min(2, { message: "El nombre es requerido" }).trim(),
-  color: z.string().min(2, { message: "El nombre es requerido" }).trim(),
+  foot: z.string().min(2, { message: "Esta pregunta es requerida" }).trim(),
+  artist: z.string().min(2, { message: "Esta pregunta es requerida" }).trim(),
+  place: z.string().min(2, { message: "Esta pregunta es requerida" }).trim(),
+  color: z.string().min(2, { message: "Esta pregunta es requerida" }).trim(),
 });
 
 export const LoginFormSchema = z.object({

@@ -4,9 +4,21 @@ import styles from "./dashboard.module.css";
 import { ResponseData } from "../../../../types/types";
 import Image from "next/image";
 import UpdateUserForm from "@/app/components/update-user-form/UpdateUserForm";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogTrigger,
+// } from "@/components/ui/dialog"
+import Modal from "@/app/components/modal/Modal";
+import GenericButton from "@/app/components/generic-button/GenericButton";
+import LogoutButton from "@/app/components/logout-button/LogoutButton";
 
 export default function DashboardPage() {
   const [data, setData] = useState<ResponseData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,7 +39,12 @@ export default function DashboardPage() {
   return (
     <div className={styles.dashboard}>
       <div className={styles.userInfo}>
-        <div className={styles.userGradient}></div>
+        <div className={styles.userGradient}>
+          <LogoutButton/>
+        </div>
+        <GenericButton onClick={openModal} className={styles.buttonModal}>
+          Edit
+        </GenericButton>
         <div className={styles.userHeaderProfile}>
           {data.currentUser.image ? (
             <Image
@@ -48,6 +65,7 @@ export default function DashboardPage() {
             <p className={styles.emailProfile}>{data.currentUser.email}</p>
           </div>
         </div>
+
         <section className={styles.sectionInputs}>
           <div className={styles.containerInputs}>
             <label>Nombre Completo</label>
@@ -105,9 +123,9 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
-      <div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Editar perfil">
         <UpdateUserForm />
-      </div>
+      </Modal>
     </div>
   );
 }

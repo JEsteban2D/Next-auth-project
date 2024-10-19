@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { ResponseData, User } from "../../types/types";
 
 const UserContext = createContext<ResponseData | undefined>(undefined);
@@ -23,6 +23,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
       console.error("Error fetching users:", error);
     }
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <UserContext.Provider value={{ users, currentUser }}>

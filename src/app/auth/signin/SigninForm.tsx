@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { LoginFormSchema } from "@/_lib/definitions";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import GenericButton from "@/app/components/generic-button/GenericButton";
@@ -13,34 +12,35 @@ import Link from "next/link";
 type SignupFormInputs = z.infer<typeof LoginFormSchema>;
 
 const SigninForm = () => {
+  const [authError, setAuthError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupFormInputs>({
-    resolver: zodResolver(LoginFormSchema),
-  });
+  } = useForm<SignupFormInputs>();
 
   const router = useRouter();
 
   const onSubmit = async (data: SignupFormInputs) => {
+    setAuthError(null);
     console.log(data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
+
     if (!res) {
-      console.error("Error en el servidor.");
+      setAuthError("Error en el servidor.");
       return;
     }
+
     if (res.error) {
-      console.error("Error en el login:", res.error);
+      setAuthError("Credenciales incorrectas. Intenta de nuevo.");
     } else {
       const sessionRes = await fetch("/api/auth/session");
       const session = await sessionRes.json();
 
-      // Verificamos el rol del usuario y redirigimos
       if (session?.user?.role === "admin") {
         router.push("/admin");
       } else {
@@ -74,6 +74,7 @@ const SigninForm = () => {
             <p className={styles.formError}>{errors.password.message}</p>
           )}
         </div>
+        {authError && <p className={styles.authError}>{authError}</p>}
         <GenericButton type="submit">Login</GenericButton>
         <div className={styles.linkTextFooter}>
           ¿Aun no tienes una cuenta?{" "}

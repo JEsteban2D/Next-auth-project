@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import styles from "./UpdateUserForm.module.css";
+import GenericButton from "../generic-button/GenericButton";
 
 interface UserFormInputs {
-    name: string;
-    lastName: string;
-    foot: string;
-    artist: string;
-    place: string;
-    color: string;
-    // image: string;
+  name: string;
+  lastName: string;
+  foot: string;
+  artist: string;
+  place: string;
+  color: string;
+  // image: string;
 }
 
 const UpdateUserForm = () => {
-
   const { register, handleSubmit, setValue } = useForm<UserFormInputs>();
   const [message, setMessage] = useState<string>("");
 
@@ -41,9 +42,9 @@ const UpdateUserForm = () => {
       const response = await fetch("/api/users", {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -60,55 +61,46 @@ const UpdateUserForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Nombre</label>
-        <input
-          type="text"
-          {...register("name", { required: true })}
-        />
-      </div>
+      <div className={styles.form}>
+        <div className={styles.containerInputs}>
+          <label>Nombre</label>
+          <input
+            className={styles.input}
+            type="text"
+            {...register("name", { required: true })}
+          />
+        </div>
 
-      <div>
-        <label>Apellido</label>
-        <input
-          type="text"
-          {...register("lastName", { required: true })}
-        />
-      </div>
+        <div className={styles.containerInputs}>
+          <label>Apellido</label>
+          <input
+            className={styles.input}
+            type="text"
+            {...register("lastName", { required: true })}
+          />
+        </div>
 
-      <div>
-        <label>Comida preferida</label>
-        <input
-          type="text"
-          {...register("foot")}
-        />
-      </div>
+        <div className={styles.containerInputs}>
+          <label>Comida preferida</label>
+          <input className={styles.input} type="text" {...register("foot")} />
+        </div>
 
-      <div>
-        <label>Artista favorito</label>
-        <input
-          type="text"
-          {...register("artist")}
-        />
-      </div>
+        <div className={styles.containerInputs}>
+          <label>Artista favorito</label>
+          <input className={styles.input} type="text" {...register("artist")} />
+        </div>
 
-      <div>
-        <label>Lugar favorito</label>
-        <input
-          type="text"
-          {...register("place")}
-        />
-      </div>
+        <div className={styles.containerInputs}>
+          <label>Lugar favorito</label>
+          <input className={styles.input} type="text" {...register("place")} />
+        </div>
 
-      <div>
-        <label>Color favorito</label>
-        <input
-          type="text"
-          {...register("color")}
-        />
-      </div>
+        <div className={styles.containerInputs}>
+          <label>Color favorito</label>
+          <input className={styles.input} type="text" {...register("color")} />
+        </div>
 
-      {/* <div>
+        {/* <div>
         <label>Imagen (URL)</label>
         <input
           type="text"
@@ -116,11 +108,12 @@ const UpdateUserForm = () => {
         />
       </div> */}
 
-      <button type="submit">Actualizar datos</button>
+        <GenericButton type="submit">Actualizar datos</GenericButton>
 
-      {message && <p>{message}</p>}
+        {message && <p>{message}</p>}
+      </div>
     </form>
-  )
-}
+  );
+};
 
-export default UpdateUserForm
+export default UpdateUserForm;
