@@ -4,16 +4,14 @@ import styles from "./dashboard.module.css";
 import { ResponseData } from "../../../../types/types";
 import Image from "next/image";
 import UpdateUserForm from "@/app/components/update-user-form/UpdateUserForm";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogTrigger,
-// } from "@/components/ui/dialog"
 import Modal from "@/app/components/modal/Modal";
 import GenericButton from "@/app/components/generic-button/GenericButton";
-import LogoutButton from "@/app/components/logout-button/LogoutButton";
+// import LogoutButton from "@/app/components/logout-button/LogoutButton";
+import defaultImg from "@/app/assets/default-profile.jpg";
+import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
+  const { data: session } = useSession();
   const [data, setData] = useState<ResponseData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,36 +31,38 @@ export default function DashboardPage() {
     fetchUsers();
   }, []);
 
-  if (!data?.currentUser) {
+  if (!data?.currentUser && !session) {
     return <div>Loading...</div>;
   }
   return (
     <div className={styles.dashboard}>
       <div className={styles.userInfo}>
-        <div className={styles.userGradient}>
-          <LogoutButton/>
-        </div>
-        <GenericButton onClick={openModal} className={styles.buttonModal}>
-          Edit
-        </GenericButton>
+        <div className={styles.userGradient}>{/* <LogoutButton /> */}</div>
+        {!session?.user && (
+          <GenericButton onClick={openModal} className={styles.buttonModal}>
+            Edit
+          </GenericButton>
+        )}
         <div className={styles.userHeaderProfile}>
-          {data.currentUser.image ? (
-            <Image
-              className={styles.cardImage}
-              src={data.currentUser.image}
-              width={500}
-              height={500}
-              alt="Profile picture of the user"
-              loading="lazy" // Opcional: para cargar la imagen de forma más eficiente
-            />
-          ) : (
-            <div>No image available</div> // Mensaje si no hay imagen
-          )}
+          <Image
+            className={styles.cardImage}
+            src={data?.currentUser?.image || session?.user?.image || defaultImg}
+            width={500}
+            height={500}
+            alt="Profile picture of the user"
+            loading="lazy"
+          />
           <div className={styles.containerText}>
             <p className={styles.nameProfile}>
-              {data.currentUser.name} {data.currentUser.lastName}
+              {data?.currentUser?.name && data?.currentUser?.lastName
+                ? `${data.currentUser.name}`
+                : session?.user?.name}
             </p>
-            <p className={styles.emailProfile}>{data.currentUser.email}</p>
+            <p className={styles.emailProfile}>
+              {data?.currentUser?.email
+                ? `${data.currentUser.email}`
+                : session?.user?.email}
+            </p>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export default function DashboardPage() {
               type="text"
               className={styles.input}
               readOnly
-              value={data.currentUser.name}
+              value={data?.currentUser?.name || session?.user?.name || ""}
             />
           </div>
           <div className={styles.containerInputs}>
@@ -82,7 +82,7 @@ export default function DashboardPage() {
               type="email"
               className={styles.input}
               readOnly
-              value={data.currentUser.lastName}
+              value={data?.currentUser?.email || session?.user?.email || ""}
             />
           </div>
           <div className={styles.containerInputs}>
@@ -91,7 +91,7 @@ export default function DashboardPage() {
               type="text"
               className={styles.input}
               readOnly
-              value={data.currentUser.foot}
+              value={data?.currentUser?.foot}
             />
           </div>
           <div className={styles.containerInputs}>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
               type="text"
               className={styles.input}
               readOnly
-              value={data.currentUser.place}
+              value={data?.currentUser?.place}
             />
           </div>
           <div className={styles.containerInputs}>
@@ -109,7 +109,7 @@ export default function DashboardPage() {
               type="text"
               className={styles.input}
               readOnly
-              value={data.currentUser.color}
+              value={data?.currentUser?.color}
             />
           </div>
           <div className={styles.containerInputs}>
@@ -118,7 +118,7 @@ export default function DashboardPage() {
               type="text"
               className={styles.input}
               readOnly
-              value={data.currentUser.artist}
+              value={data?.currentUser?.artist}
             />
           </div>
         </section>

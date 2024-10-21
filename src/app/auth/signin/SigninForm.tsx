@@ -50,40 +50,57 @@ const SigninForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.form}>
-        <div className={styles.textHeaderForm}>
-          <h1>Inicia sesión en tu cuenta</h1>
-          <p>Ingresa tu información para comenzar</p>
+    <div className={styles.form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formIn}>
+          <div className={styles.textHeaderForm}>
+            <h1>Inicia sesión en tu cuenta</h1>
+            <p>Ingresa tu información para comenzar</p>
+          </div>
+          <div className={styles.containerInputs}>
+            <label>Correo Electrónico</label>
+            <input
+              type="email"
+              {...register("email")}
+              className={styles.input}
+            />
+            {errors.email && (
+              <p className={styles.formError}>{errors.email.message}</p>
+            )}
+          </div>
+          <div className={styles.containerInputs}>
+            <label>Contraseña</label>
+            <input
+              type="password"
+              {...register("password")}
+              className={styles.input}
+            />
+            {errors.password && (
+              <p className={styles.formError}>{errors.password.message}</p>
+            )}
+          </div>
+          {authError && <p className={styles.authError}>{authError}</p>}
+          <GenericButton type="submit">Login</GenericButton>
+          <div className={styles.linkTextFooter}>
+            ¿Aun no tienes una cuenta?{" "}
+            <Link className={styles.link} href="/auth/signup">
+              Register
+            </Link>
+          </div>
         </div>
-        <div className={styles.containerInputs}>
-          <label>Correo Electrónico</label>
-          <input type="email" {...register("email")} className={styles.input} />
-          {errors.email && (
-            <p className={styles.formError}>{errors.email.message}</p>
-          )}
-        </div>
-        <div className={styles.containerInputs}>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            {...register("password")}
-            className={styles.input}
-          />
-          {errors.password && (
-            <p className={styles.formError}>{errors.password.message}</p>
-          )}
-        </div>
-        {authError && <p className={styles.authError}>{authError}</p>}
-        <GenericButton type="submit">Login</GenericButton>
-        <div className={styles.linkTextFooter}>
-          ¿Aun no tienes una cuenta?{" "}
-          <Link className={styles.link} href="/auth/signup">
-            Register
-          </Link>
-        </div>
+      </form>
+      <div className={styles.separator}>
+        <hr className={styles.lineSeparator} />
+        O continuar con
+        <hr className={styles.lineSeparator} />
       </div>
-    </form>
+      <button
+        className={styles.googleButton}
+        onClick={() => signIn("google", { callbackUrl: `/dashboard` })}
+      >
+        Iniciar sesión con Google
+      </button>
+    </div>
   );
 };
 

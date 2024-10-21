@@ -1,10 +1,12 @@
+"use client"
 import React from "react";
 import LogoutButton from "../logout-button/LogoutButton";
 import { auth } from "../../../../auth";
 import styles from "./Navbar.module.css";
+import { useSession } from "next-auth/react";
 
-const Navbar = async () => {
-  const session = await auth();
+const Navbar = () => {
+  const { data: session } = useSession();
   
   return (
     <header className={styles.header}>
