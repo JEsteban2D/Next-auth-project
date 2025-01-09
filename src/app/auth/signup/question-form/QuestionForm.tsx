@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./../SignupForm.module.css";
-import { Path, UseFormRegister } from "react-hook-form";
 
 type Question = {
   id: number;
   question: string;
 };
 
-type FormValues = {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  answers: Record<number, string>; // Las respuestas están indexadas por id
-};
-
-type QuestionFormProps = {
-  register: UseFormRegister<FormValues>;
-};
-
-const QuestionForm: React.FC<QuestionFormProps> = ({ register }) => {
-
+const QuestionForm = ({ register }: any) => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
@@ -47,10 +33,13 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ register }) => {
         <div key={question.id} className={styles.containerInputs}>
           <label>{question.question}</label>
           <input
-            {...register(`answers.${question.id}` as Path<FormValues>)} // Asegura que TypeScript no marque error
+            {...register(`answers.${question.id}`)}
             className={styles.input}
             placeholder={question.question}
           />
+          {/* {errors.answers && errors.answers[question.id] && (
+            <p className={styles.formError}>{errors.answers[question.id].message}</p>
+          )} */}
         </div>
       ))}
     </>
