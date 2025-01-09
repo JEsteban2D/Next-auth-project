@@ -22,7 +22,7 @@ export interface Answer {
 
 export interface ResponseData {
   users: User[];
-  currentUser: User;
+  currentUser: User | null;
 }
 
 export interface CardProps {
