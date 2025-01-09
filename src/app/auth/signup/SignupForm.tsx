@@ -13,6 +13,14 @@ import QuestionForm from "./question-form/QuestionForm";
 
 // type SignupFormInputs = z.infer<typeof SignupFormSchema>;
 
+type SignupFormData = {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  answers: Array<string | null>;
+};
+
 const SignupForm = () => {
   const [resource, setResource] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +30,12 @@ const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    // formState: { errors },
-  } = useForm();
+  } = useForm<SignupFormData>();
 
-  const onSubmit = async (formData: any) => {
+  const onSubmit: SubmitHandler<SignupFormData> = async (formData) => {
     setIsLoading(true);
     console.log("Enviando datos:", formData);
-    const filteredAnswers = formData.answers.filter((answer: any) => answer !== null);
+    const filteredAnswers = formData.answers.filter((answer) => answer !== null);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
