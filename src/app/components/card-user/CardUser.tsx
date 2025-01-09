@@ -33,15 +33,17 @@ const CardUser: React.FC<CardProps> = ({ user }) => {
         <section className={styles.cardFooter}>
           <hr />
           <h2 className={styles.textFooter}>Questions:</h2>
-          <p>
-            <strong>Foot:</strong> {user.foot}
-          </p>
-          <p>
-            <strong>Place:</strong> {user.place}
-          </p>
-          <p>
-            <strong>Artist:</strong> {user.artist}
-          </p>
+          {user.answer.length > 0 ? (
+            user.answer.map((answer) => (
+              <div key={answer.id} className={styles.questionContainer}>
+                {/* <p className={styles.question}>{answer.question.question}:</p> */}
+                <p className={styles.question}>{answer.questionText}: </p>
+                <p className={styles.answer}> {answer.answer}</p>
+              </div>
+            ))
+          ) : (
+            <p className={styles.noQuestions}>No questions answered yet.</p>
+          )}
         </section>
       </div>
     </div>

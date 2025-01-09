@@ -2,6 +2,7 @@
 import React from "react";
 import SignupForm from "./SignupForm";
 import styles from "./SignupForm.module.css";
+import QuestionForm from "./question-form/QuestionForm";
 
 const page = () => {
 

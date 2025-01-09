@@ -4,16 +4,25 @@ export interface User {
   lastName: string;
   email: string;
   role: string;
-  foot: string;
-  artist: string;
-  place: string;
-  color: string;
   image: string;
+  answer: Answer[];
+}
+
+export interface Question {
+  id: number;
+  question: string;
+}
+
+export interface Answer {
+  id: number;
+  answer: string;
+  question: Question;
+  questionText: string;
 }
 
 export interface ResponseData {
   users: User[];
-  currentUser: User | null;
+  currentUser: User;
 }
 
 export interface CardProps {

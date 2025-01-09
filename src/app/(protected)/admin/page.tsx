@@ -1,18 +1,30 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import CardUser from "@/app/components/card-user/CardUser";
 import styles from "./Admin.module.css";
-import { ResponseData } from "../../../../types/types";
+import { User, ResponseData } from "../../../../types/types";
+import Modal from "@/app/components/modal/Modal";
+import GenericButton from "@/app/components/generic-button/GenericButton";
+import UpdateQuestionForm from "@/app/components/update-question-form/UpdateQuestionForm";
+
+// export interface ResponseData {
+//   users: User[];
+// }
 
 export default function AdminPage() {
   const [data, setData] = useState<ResponseData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await fetch("/api/users");
       if (response.ok) {
         const data = await response.json();
+        console.log("esta es la data:", data);
         setData(data);
       } else {
         console.error("Error al obtener usuarios:", response.status);
@@ -33,24 +45,16 @@ export default function AdminPage() {
 
   return (
     <div className={styles.admin}>
+      <GenericButton onClick={openModal}>Editar las preguntas</GenericButton>
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Editar Preguntas">
+        <p className={styles.textQuestion}>AQUI PODRAS EDITAR LAS PREGUNTAS DEL FORMULARIO</p>
+        <UpdateQuestionForm />
+      </Modal>
       <ul className={styles.cardsSection}>
         {data.users.map((user) => (
           <CardUser key={user.id} user={user} />
         ))}
       </ul>
-      {/* <h2>Usuario Actual</h2>
-      {data.currentUser ? (
-        <div>
-          <p>
-            {data.currentUser.name} {data.currentUser.lastName}
-          </p>
-          <p>
-            {data.currentUser.email} ({data.currentUser.role})
-          </p>
-        </div>
-      ) : (
-        <p>No hay un usuario actual.</p>
-      )} */}
     </div>
   );
 }

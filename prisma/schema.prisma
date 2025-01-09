@@ -19,15 +19,30 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement()) // ID autoincrementable
-  name      String 
-  lastName  String
-  email     String   @unique
-  role      Role     @default(user)
-  password  String 
-  foot      String? 
-  artist    String? 
-  place     String? 
-  color     String?  
-  image     String?
+  id       Int      @id @default(autoincrement()) // ID autoincrementable
+  name     String
+  lastName String
+  email    String   @unique
+  role     Role     @default(user)
+  password String
+  image    String?
+  answer   Answer[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  question  String   
+  createdAt DateTime @default(now())
+  // answer    Answer[]
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  questionId Int
+  // question   Question @relation(fields: [questionId], references: [id])
+  questionText String 
+  answer     String
+  createdAt  DateTime @default(now())
 }

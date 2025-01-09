@@ -9,12 +9,14 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  background-image: url("./assets/bg-principalO.jpg");
+  /* box-sizing: border-box; */
+  /* background-image: url("./assets/bg-principalO.jpg"); */
   background-size: cover;
   background-position: center; 
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
+  background: rgb(194, 193, 193);
+/* background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(34, 149, 195, 0.858) 100%); */
 }
 
 body {

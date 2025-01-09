@@ -22,11 +22,13 @@ export async function GET() {
         lastName: true,
         email: true,
         role: true,
-        foot: true,
-        artist: true,
-        place: true,
-        color: true,
         image: true,
+        answer: {
+          select: {
+            questionText: true, // Seleccionar el texto de la pregunta
+            answer: true,
+          },
+        },
       },
     });
 
@@ -39,11 +41,13 @@ export async function GET() {
         lastName: true,
         email: true,
         role: true,
-        foot: true,
-        artist: true,
-        place: true,
-        color: true,
         image: true,
+        answer: {
+          select: {
+            questionText: true, // Seleccionar el texto de la pregunta
+            answer: true,
+          },
+        },
       },
     });
 
@@ -78,18 +82,14 @@ export async function PUT(request: Request){
     const body = await request.json();
 
     // Extraer los campos que pueden ser actualizados
-    const { name, lastName, foot, artist, place, color, 
+    const { name, lastName, 
       // image 
     } = body;
 
     // Validación opcional para asegurarte que al menos hay datos a actualizar
     if (
       !name &&
-      !lastName &&
-      !foot &&
-      !artist &&
-      !place &&
-      !color 
+      !lastName
       // &&
       // !image
     ) {
@@ -108,10 +108,6 @@ export async function PUT(request: Request){
       data: {
         name: name || undefined,
         lastName: lastName || undefined,
-        foot: foot || undefined,
-        artist: artist || undefined,
-        place: place || undefined,
-        color: color || undefined,
         // image: image || undefined,
       },
     })

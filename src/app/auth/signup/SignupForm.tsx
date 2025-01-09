@@ -6,15 +6,15 @@ import styles from "./SignupForm.module.css";
 import { CldUploadWidget } from "next-cloudinary";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SignupFormSchema } from "@/_lib/definitions";
+// import { SignupFormSchema } from "@/_lib/definitions";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import QuestionForm from "./question-form/QuestionForm";
 
-type SignupFormInputs = z.infer<typeof SignupFormSchema>;
+// type SignupFormInputs = z.infer<typeof SignupFormSchema>;
 
 const SignupForm = () => {
   const [resource, setResource] = useState<string | null>(null);
-  // const { register, handleSubmit } = useForm<SignupFormInputs>();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
@@ -22,13 +22,13 @@ const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<SignupFormInputs>({
-    resolver: zodResolver(SignupFormSchema),
-  });
+    // formState: { errors },
+  } = useForm();
 
-  const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
+  const onSubmit = async (formData: any) => {
     setIsLoading(true);
+    console.log("Enviando datos:", formData);
+    const filteredAnswers = formData.answers.filter((answer: any) => answer !== null);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -37,6 +37,7 @@ const SignupForm = () => {
         },
         body: JSON.stringify({
           ...formData,
+          answers: filteredAnswers,
           image: resource || null,
         }),
       });
@@ -72,63 +73,37 @@ const SignupForm = () => {
             className={styles.input}
             placeholder="Nombre"
           />
-          {errors.name && (
+          {/* {errors.name && (
             <p className={styles.formError}>{errors.name.message}</p>
-          )}
+          )} */}
         </div>
         <div className={styles.containerInputs}>
           <label>Apellido</label>
-          <input {...register("lastName")} className={styles.input} />
-          {errors.lastName && (
+          <input {...register("lastName")} placeholder="Apellido" className={styles.input} />
+          {/* {errors.lastName && (
             <p className={styles.formError}>{errors.lastName.message}</p>
-          )}
+          )} */}
         </div>
         <div className={styles.containerInputs}>
           <label>Correo Electrónico</label>
-          <input type="email" {...register("email")} className={styles.input} />
-          {errors.email && (
+          <input type="email" {...register("email")} placeholder="Correo Electronico" className={styles.input} />
+          {/* {errors.email && (
             <p className={styles.formError}>{errors.email.message}</p>
-          )}
+          )} */}
         </div>
         <div className={styles.containerInputs}>
           <label>Contraseña</label>
           <input
             type="password"
             {...register("password")}
+            placeholder="Contraseña"
             className={styles.input}
           />
-          {errors.password && (
+          {/* {errors.password && (
             <p className={styles.formError}>{errors.password.message}</p>
-          )}
+          )} */}
         </div>
-        <div className={styles.containerInputs}>
-          <label>Comida Favorita</label>
-          <input {...register("foot")} className={styles.input} />
-          {errors.foot && (
-            <p className={styles.formError}>{errors.foot.message}</p>
-          )}
-        </div>
-        <div className={styles.containerInputs}>
-          <label>Artista Favorito</label>
-          <input {...register("artist")} className={styles.input} />
-          {errors.artist && (
-            <p className={styles.formError}>{errors.artist.message}</p>
-          )}
-        </div>
-        <div className={styles.containerInputs}>
-          <label>Lugar Favorito</label>
-          <input {...register("place")} className={styles.input} />
-          {errors.place && (
-            <p className={styles.formError}>{errors.place.message}</p>
-          )}
-        </div>
-        <div className={styles.containerInputs}>
-          <label>Color Favorito</label>
-          <input {...register("color")} className={styles.input} />
-          {errors.color && (
-            <p className={styles.formError}>{errors.color.message}</p>
-          )}
-        </div>
+        <QuestionForm register={register} />
         <div className={styles.containerInputs}>
           <label>Imagen de Perfil</label>
           <CldUploadWidget

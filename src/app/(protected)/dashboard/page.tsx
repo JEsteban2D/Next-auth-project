@@ -34,6 +34,7 @@ export default function DashboardPage() {
   if (!data?.currentUser && !session) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.userInfo}>
@@ -85,42 +86,18 @@ export default function DashboardPage() {
               value={data?.currentUser?.email || session?.user?.email || ""}
             />
           </div>
-          <div className={styles.containerInputs}>
-            <label>Comida Favorita</label>
-            <input
-              type="text"
-              className={styles.input}
-              readOnly
-              value={data?.currentUser?.foot}
-            />
-          </div>
-          <div className={styles.containerInputs}>
-            <label>Lugar Favorito</label>
-            <input
-              type="text"
-              className={styles.input}
-              readOnly
-              value={data?.currentUser?.place}
-            />
-          </div>
-          <div className={styles.containerInputs}>
-            <label>Color Favorita</label>
-            <input
-              type="text"
-              className={styles.input}
-              readOnly
-              value={data?.currentUser?.color}
-            />
-          </div>
-          <div className={styles.containerInputs}>
-            <label>Artista Favorito</label>
-            <input
-              type="text"
-              className={styles.input}
-              readOnly
-              value={data?.currentUser?.artist}
-            />
-          </div>
+          {data?.currentUser?.answer.map((answer, index) => (
+            <div key={index} className={styles.containerInputs}>
+              {/* <label>{answer.question.question}</label> */}
+              <label>{answer.questionText}</label>
+              <input
+                type="text"
+                className={styles.input}
+                readOnly
+                value={answer.answer}
+              />
+            </div>
+          ))}
         </section>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} title="Editar perfil">
