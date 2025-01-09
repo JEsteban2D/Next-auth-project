@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { LoginFormSchema } from "@/_lib/definitions";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SigninForm.module.css";
@@ -9,7 +7,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-type SignupFormInputs = z.infer<typeof LoginFormSchema>;
+type SignupFormInputs = {
+  email: string;
+  password: string;
+};
 
 const SigninForm = () => {
   const [authError, setAuthError] = useState<string | null>(null);

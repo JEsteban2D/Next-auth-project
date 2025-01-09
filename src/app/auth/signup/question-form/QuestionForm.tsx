@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./../SignupForm.module.css";
+import { UseFormRegister } from "react-hook-form";
 
 type Question = {
   id: number;
   question: string;
 };
 
-const QuestionForm = ({ register }: any) => {
+type QuestionFormProps = {
+  register: UseFormRegister<any>;
+};
+
+const QuestionForm: React.FC<QuestionFormProps> = ({ register }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
