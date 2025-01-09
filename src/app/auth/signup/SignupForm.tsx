@@ -13,7 +13,7 @@ type SignupFormInputs = {
   lastName: string;
   email: string;
   password: string;
-  answers: (string | null)[];
+  answers: Record<number, string | null>;
 };
 
 const SignupForm: React.FC = () => {
@@ -30,7 +30,7 @@ const SignupForm: React.FC = () => {
   const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
     setIsLoading(true);
     console.log("Enviando datos:", formData);
-    const filteredAnswers = formData.answers.filter((answer) => answer !== null);
+    const filteredAnswers = Object.values(formData.answers).filter((answer) => answer !== null);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
