@@ -1,18 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import styles from "./SignupForm.module.css";
 import { CldUploadWidget } from "next-cloudinary";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-// import { SignupFormSchema } from "@/_lib/definitions";
-
 import QuestionForm from "./question-form/QuestionForm";
 
-// type SignupFormInputs = z.infer<typeof SignupFormSchema>;
+type SignupFormInputs = {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  answers: (string | null)[];
+};
 
-const SignupForm = () => {
+const SignupForm: React.FC = () => {
   const [resource, setResource] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -21,13 +25,12 @@ const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    // formState: { errors },
-  } = useForm();
+  } = useForm<SignupFormInputs>();
 
-  const onSubmit = async (formData: any) => {
+  const onSubmit: SubmitHandler<SignupFormInputs> = async (formData) => {
     setIsLoading(true);
     console.log("Enviando datos:", formData);
-    const filteredAnswers = formData.answers.filter((answer: any) => answer !== null);
+    const filteredAnswers = formData.answers.filter((answer) => answer !== null);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",

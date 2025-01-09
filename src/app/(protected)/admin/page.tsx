@@ -1,15 +1,11 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardUser from "@/app/components/card-user/CardUser";
 import styles from "./Admin.module.css";
-import { User, ResponseData } from "../../../../types/types";
+import { ResponseData } from "../../../../types/types";
 import Modal from "@/app/components/modal/Modal";
 import GenericButton from "@/app/components/generic-button/GenericButton";
 import UpdateQuestionForm from "@/app/components/update-question-form/UpdateQuestionForm";
-
-// export interface ResponseData {
-//   users: User[];
-// }
 
 export default function AdminPage() {
   const [data, setData] = useState<ResponseData | null>(null);
